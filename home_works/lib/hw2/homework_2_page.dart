@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:home_works/hw2/avatars.dart';
 import 'package:home_works/hw2/message.dart';
 import 'package:home_works/hw2/message_store.dart';
@@ -24,7 +25,7 @@ class HomeWork2Page extends StatefulWidget {
 class _HomeWork2PageState extends State<HomeWork2Page> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  final MessageStore _messageStore = MessageStore();
+  final MessageStore _messageStore = Modular.get<MessageStore>();
 
   static const Color lightGray = Color(0xFF7D7D7D);
 
@@ -100,7 +101,7 @@ class _HomeWork2PageState extends State<HomeWork2Page> {
   Color getColor(String author) {
     if (!namesColor.containsKey(author)) {
       namesColor.addAll(
-          {author: NameColors.getRandomColor(context.read<ThemeStore>().dark)});
+          {author: NameColors.getRandomColor(Modular.get<ThemeStore>().dark)});
     }
     return namesColor[author]!;
   }
@@ -123,7 +124,7 @@ class _HomeWork2PageState extends State<HomeWork2Page> {
                 padding: EdgeInsets.only(right: 5),
                 child: Icon(Icons.wb_sunny_outlined)),
             onTap: () {
-              context.read<ThemeStore>().changeTheme();
+              Modular.get<ThemeStore>().changeTheme();
             },
           )
         ],
@@ -137,7 +138,8 @@ class _HomeWork2PageState extends State<HomeWork2Page> {
               Expanded(
                 child: Observer(builder: (context) {
                   return ListView(
-                    children: _messageStore.messages.map((item) {
+                    reverse: true,
+                    children: _messageStore.messages.reversed.map((item) {
                       Container leading = Container(width: 0, height: 0);
                       Container trailing = Container(width: 0, height: 0);
                       if (item.author == currentUser) {
