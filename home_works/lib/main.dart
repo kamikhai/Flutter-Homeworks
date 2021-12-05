@@ -1,8 +1,15 @@
-import 'package:home_works/homework_1_page.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:home_works/hw1/homework_1_page.dart';
 import 'package:flutter/material.dart';
+import 'package:home_works/hw2/theme_store.dart';
+import 'package:provider/provider.dart';
+
+import 'hw2/homework_2_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [Provider<ThemeStore>(create: (_) => ThemeStore())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -10,16 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF1E1E1E),
-        shadowColor: Color(0xFF2B2B2B),
-        titleTextStyle: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
-      )),
-      home: const MyHomePage(title: 'Homeworks'),
-    );
+    return Observer(builder: (context) {
+      return MaterialApp(
+          title: 'Flutter Demo',
+          theme: context.watch<ThemeStore>().themeData,
+          home: const MyHomePage(title: 'Homeworks'));
+    });
   }
 }
 
@@ -33,13 +36,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0x00000000),
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          GestureDetector(
+            child: const Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: Icon(Icons.wb_sunny_outlined)),
+            onTap: () {
+              context.read<ThemeStore>().changeTheme();
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -49,34 +60,33 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Expanded(
                 child: ListView(
-                  children: ListTile.divideTiles(
-                      context: context,
-                      color: const Color(0xFF7D7D7D),
-                      tiles: [
-                        ListTile(
-                          title: const Text(
-                            'HW1. Widgets',
-                            style: TextStyle(color: Color(0xFF7D7D7D)),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const HomeWork1Page(
-                                    title: 'HW1. Widgets')));
-                          },
-                        ),
-                        const ListTile(
-                          title: Text(
-                            'HW2. Soon...',
-                            style: TextStyle(color: Color(0xFF7D7D7D)),
-                          ),
-                        ),
-                        const ListTile(
-                          title: Text(
-                            'HW3. Soon...',
-                            style: TextStyle(color: Color(0xFF7D7D7D)),
-                          ),
-                        ),
-                      ]).toList(),
+                  children: ListTile.divideTiles(context: context, tiles: [
+                    ListTile(
+                      title: const Text(
+                        'HW1. Widgets',
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const HomeWork1Page(title: 'HW1. Widgets')));
+                      },
+                    ),
+                    ListTile(
+                      title: const Text(
+                        'HW2. API',
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const HomeWork2Page(title: 'HW2. API, MobX')));
+                      },
+                    ),
+                    const ListTile(
+                      title: Text(
+                        'HW3. Soon...',
+                      ),
+                    ),
+                  ]).toList(),
                 ),
               ),
             ],

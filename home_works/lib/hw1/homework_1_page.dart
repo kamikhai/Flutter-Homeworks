@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_works/message.dart';
+import 'package:home_works/hw1/message.dart';
 
 class HomeWork1Page extends StatefulWidget {
   const HomeWork1Page({Key? key, required this.title}) : super(key: key);
@@ -34,7 +34,9 @@ class _HomeWork1PageState extends State<HomeWork1Page> {
     return Scaffold(
       backgroundColor: const Color(0x00000000),
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: darkGray,
+        title: Text(widget.title, style: const TextStyle(color: lightGray),),
+        shadowColor: Color(0xff585858),
       ),
       body: SafeArea(
         child: Center(
