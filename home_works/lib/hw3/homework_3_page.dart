@@ -25,30 +25,6 @@ class _HomeWork3PageState extends State<HomeWork3Page> {
   ImagesStore imagesStore = Modular.get<ImagesStore>();
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
-  _getFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      imagesStore.addImage(
-          GalleryImage(name: basename(pickedFile.path), url: pickedFile.path));
-    }
-  }
-
-  _getFromCamera() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      imagesStore.addImage(
-          GalleryImage(name: basename(pickedFile.path), url: pickedFile.path));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,13 +63,13 @@ class _HomeWork3PageState extends State<HomeWork3Page> {
               child: Icon(Icons.image),
               label: 'Загрузить из галереи',
               onTap: () {
-                _getFromGallery();
+                imagesStore.getFromGallery();
               }),
           SpeedDialChild(
               child: Icon(Icons.camera_alt),
               label: 'Сделать фото',
               onTap: () {
-                _getFromCamera();
+                imagesStore.getFromCamera();
               }),
         ],
       ),

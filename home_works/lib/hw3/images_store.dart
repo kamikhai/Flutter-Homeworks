@@ -1,5 +1,6 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-
+import 'package:path/path.dart';
 import 'image.dart';
 
 part 'images_store.g.dart';
@@ -21,6 +22,30 @@ abstract class _ImagesStore with Store {
     GalleryImage(name: 'img10.jpeg', url: 'assets/images/img10.jpeg'),
     GalleryImage(name: 'img11.jpeg', url: 'assets/images/img11.jpeg'),
   ]);
+
+  void getFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      addImage(
+          GalleryImage(name: basename(pickedFile.path), url: pickedFile.path));
+    }
+  }
+
+  void getFromCamera() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      addImage(
+          GalleryImage(name: basename(pickedFile.path), url: pickedFile.path));
+    }
+  }
 
   @action
   void addImage(GalleryImage image) {
