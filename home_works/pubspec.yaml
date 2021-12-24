@@ -44,6 +44,9 @@ dependencies:
   flutter_modular: 4.2.0
   image_picker: ^0.8.4+4
   flutter_speed_dial: ^4.6.6
+  google_fonts: ^2.1.0
+  carousel_slider: ^4.0.0
+  sqflite: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +71,16 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/avatars/
+    - assets/images/posts/
+
+  fonts:
+    - family: Billabong
+      fonts:
+        - asset: fonts/Billabong-Regular.ttf
+    - family: InstagramIcons
+      fonts:
+       - asset: fonts/InstagramIcons.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

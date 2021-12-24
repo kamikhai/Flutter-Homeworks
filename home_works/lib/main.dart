@@ -6,6 +6,7 @@ import 'package:home_works/hw2/theme_store.dart';
 import 'app_module.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
 
