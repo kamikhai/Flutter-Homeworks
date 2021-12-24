@@ -61,6 +61,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         Modular.to.pushNamed('/hw3/');
                       },
                     ),
+                    ListTile(
+                      title: const Text(
+                        'HW4. Instagram',
+                      ),
+                      onTap: () {
+                        Modular.to.pushReplacementNamed('/hw4/');
+                      },
+                    ),
                   ]).toList(),
                 ),
               ),
